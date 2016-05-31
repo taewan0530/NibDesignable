@@ -68,7 +68,7 @@ extension NibDesignableProtocol {
     */
     private func setupNib() {
         let view = self.loadNib()
-        self.nibContainerView.addSubview(view)
+        self.nibContainerView.insertSubview(view, atIndex: 0)
         view.translatesAutoresizingMaskIntoConstraints = false
         let bindings = ["view": view]
         
