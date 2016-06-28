@@ -78,6 +78,23 @@ extension NibDesignableProtocol {
         for constraint in constraints { constraint.priority = 999 }
         self.nibContainerView.addConstraints(constraints)
     }
+    
+    // MARK: - Estimated Size
+    
+    /**
+     - returns: estimated view size
+     */
+    public func estimatedSize(fixedWidth width: CGFloat = 0, fixedHeight height: CGFloat = 0) -> CGSize {
+        self.nibContainerView.setNeedsLayout()
+        self.nibContainerView.layoutIfNeeded()
+        
+        return self.nibContainerView.systemLayoutSizeFittingSize(
+            CGSizeMake(width, height),
+            withHorizontalFittingPriority: width == 0 ? UILayoutPriorityDefaultLow: UILayoutPriorityRequired,
+            verticalFittingPriority: height == 0 ? UILayoutPriorityDefaultLow: UILayoutPriorityRequired
+        )
+    }
+
 }
 
 extension UIView {
