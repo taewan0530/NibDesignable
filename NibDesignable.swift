@@ -75,7 +75,7 @@ extension NibDesignableProtocol {
         var constraints = [NSLayoutConstraint]()
         constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[view]|", options:[], metrics:nil, views: bindings)
         constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|[view]|", options:[], metrics:nil, views: bindings)
-        for constraint in constraints { constraint.priority = 999 }
+        for constraint in constraints { constraint.priority = UILayoutPriorityRequired - 0.0001 }
         self.nibContainerView.addConstraints(constraints)
     }
     
