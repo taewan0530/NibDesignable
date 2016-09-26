@@ -56,9 +56,9 @@ extension NibDesignableProtocol {
      - returns: UIView instance loaded from a nib file.
      */
     public func loadNib() -> UIView {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: self.nibName(), bundle: bundle)
-        return nib.instantiateWithOwner(self, options: nil)[0] as! UIView // swiftlint:disable:this force_cast
+        return nib.instantiate(withOwner: self, options: nil)[0] as! UIView // swiftlint:disable:this force_cast
     }
 
     // MARK: - Nib loading
@@ -66,17 +66,22 @@ extension NibDesignableProtocol {
     /**
      Called in init(frame:) and init(aDecoder:) to load the nib and add it as a subview.
      */
-    private func setupNib() {
+    fileprivate func setupNib() {
         let view = self.loadNib()
         self.nibContainerView.insertSubview(view, atIndex: 0)
         view.translatesAutoresizingMaskIntoConstraints = false
         let bindings = ["view": view]
+<<<<<<< HEAD
         
         var constraints = [NSLayoutConstraint]()
         constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[view]|", options:[], metrics:nil, views: bindings)
         constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|[view]|", options:[], metrics:nil, views: bindings)
         for constraint in constraints { constraint.priority = UILayoutPriorityRequired - 0.0001 }
         self.nibContainerView.addConstraints(constraints)
+=======
+        self.nibContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options:[], metrics:nil, views: bindings))
+        self.nibContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options:[], metrics:nil, views: bindings))
+>>>>>>> d8e9d58b54c9bfee2a3f230a963f92e2690e6086
     }
 
 }
@@ -90,13 +95,13 @@ extension UIView {
 
      - returns: Name of a single view nib file.
      */
-    public func nibName() -> String {
-        return self.dynamicType.description().componentsSeparatedByString(".").last!
+    open func nibName() -> String {
+        return type(of: self).description().components(separatedBy: ".").last!
     }
 }
 
 @IBDesignable
-public class NibDesignable: UIView, NibDesignableProtocol {
+open class NibDesignable: UIView, NibDesignableProtocol {
 
     // MARK: - Initializer
     override public init(frame: CGRect) {
@@ -112,7 +117,7 @@ public class NibDesignable: UIView, NibDesignableProtocol {
 }
 
 @IBDesignable
-public class NibDesignableTableViewCell: UITableViewCell, NibDesignableProtocol {
+open class NibDesignableTableViewCell: UITableViewCell, NibDesignableProtocol {
     public override var nibContainerView: UIView {
         return self.contentView
     }
@@ -131,7 +136,7 @@ public class NibDesignableTableViewCell: UITableViewCell, NibDesignableProtocol 
 }
 
 @IBDesignable
-public class NibDesignableTableViewHeaderFooterView: UITableViewHeaderFooterView, NibDesignableProtocol {
+open class NibDesignableTableViewHeaderFooterView: UITableViewHeaderFooterView, NibDesignableProtocol {
 
 	public override var nibContainerView: UIView {
 			return self.contentView
@@ -151,7 +156,7 @@ public class NibDesignableTableViewHeaderFooterView: UITableViewHeaderFooterView
 }
 
 @IBDesignable
-public class NibDesignableControl: UIControl, NibDesignableProtocol {
+open class NibDesignableControl: UIControl, NibDesignableProtocol {
 
     // MARK: - Initializer
     override public init(frame: CGRect) {
@@ -167,7 +172,7 @@ public class NibDesignableControl: UIControl, NibDesignableProtocol {
 }
 
 @IBDesignable
-public class NibDesignableCollectionReusableView: UICollectionReusableView, NibDesignableProtocol {
+open class NibDesignableCollectionReusableView: UICollectionReusableView, NibDesignableProtocol {
 
     // MARK: - Initializer
     override public init(frame: CGRect) {
@@ -183,7 +188,7 @@ public class NibDesignableCollectionReusableView: UICollectionReusableView, NibD
 }
 
 @IBDesignable
-public class NibDesignableCollectionViewCell: UICollectionViewCell, NibDesignableProtocol {
+open class NibDesignableCollectionViewCell: UICollectionViewCell, NibDesignableProtocol {
     public override var nibContainerView: UIView {
         return self.contentView
     }
