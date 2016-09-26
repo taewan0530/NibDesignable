@@ -71,17 +71,13 @@ extension NibDesignableProtocol {
         self.nibContainerView.insertSubview(view, atIndex: 0)
         view.translatesAutoresizingMaskIntoConstraints = false
         let bindings = ["view": view]
-<<<<<<< HEAD
-        
+
         var constraints = [NSLayoutConstraint]()
         constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[view]|", options:[], metrics:nil, views: bindings)
         constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|[view]|", options:[], metrics:nil, views: bindings)
         for constraint in constraints { constraint.priority = UILayoutPriorityRequired - 0.0001 }
         self.nibContainerView.addConstraints(constraints)
-=======
-        self.nibContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options:[], metrics:nil, views: bindings))
-        self.nibContainerView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options:[], metrics:nil, views: bindings))
->>>>>>> d8e9d58b54c9bfee2a3f230a963f92e2690e6086
+
     }
 
 }
